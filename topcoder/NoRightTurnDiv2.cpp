@@ -16,31 +16,24 @@ class NoRightTurnDiv2{
 
 		}
 		bool valid(vector<int>& route, vector<int>& x, vector<int>& y){
-			for(unsigned int i = 0;i<route.size();++i){
-				cout<<route[i]<<" ";
-			}
-			cout<<endl;
 			int N = route.size();
 			for(int i = 0;i<N-1;++i){
 				double A1 = (double)y[route[i+1]] - y[route[i]];
 				double B1 = (double)x[route[i]] - x[route[i+1]];
 				double C1 = A1*x[route[i]] + B1*y[route[i]];
-				for(int j = 0; j<i;++j){
+				for(int j = 0; j<i-1;++j){
 					double A2 = (double)y[route[j+1]] - y[route[j]];
 					double B2 = (double)x[route[j]] - x[route[j+1]];
 					double C2 = A2*x[route[j]] + B2*y[route[j]];
 					double det = A1*B2 - A2*B1;
-					//if(route[i]==1 && route[j]==3){
-					//	cout<<det<<endl;
-					//}
 					if(!isZero(det)){
 						double X = (B2*C1 - B1*C2)/det;
 						double Y = (A1*C2 - A2*C1)/det;
 						if(
-							       max(min(x[route[i]],x[route[i+1]]),min(x[route[j]],x[route[j+1]]))<X &&
-							       min(max(x[route[i]],x[route[i+1]]),max(x[route[j]],x[route[j+1]]))>X &&
-							       max(min(y[route[i]],y[route[i+1]]),min(y[route[j]],y[route[j+1]]))<Y && 
-							       min(max(y[route[i]],y[route[i+1]]),max(y[route[j]],y[route[j+1]]))>Y){
+							       max(min(x[route[i]],x[route[i+1]]),min(x[route[j]],x[route[j+1]]))<=X &&
+							       min(max(x[route[i]],x[route[i+1]]),max(x[route[j]],x[route[j+1]]))>=X &&
+							       max(min(y[route[i]],y[route[i+1]]),min(y[route[j]],y[route[j+1]]))<=Y && 
+							       min(max(y[route[i]],y[route[i+1]]),max(y[route[j]],y[route[j+1]]))>=Y){
 							return false;	
 						}
 					}
